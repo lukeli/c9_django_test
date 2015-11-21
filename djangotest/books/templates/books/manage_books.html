@@ -1,0 +1,22 @@
+
+<h1> Add New Bookks: </h1>
+
+
+<form method="POST" class="post-form">{% csrf_token %}
+
+    {{authorform}}
+    
+    {{ bookformset.management_form }}
+    <table>
+        {{ bookformset }}
+    </table>
+    
+     <button type="submit" class="save btn btn-default">Save</button>
+</form>
+
+
+
+
+
+
+

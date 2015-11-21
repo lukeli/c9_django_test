@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 
 from .models import Question, Choice
+from .forms import QuestionForm
 
 '''
 def index(request):
@@ -72,3 +73,39 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
+        
+
+def new_question (request):
+    if request.method == 'POST':
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            #get the question text from the form
+            q_txt = form.cleaned_data['question_text']
+            #create a new questipon
+            new_question = Question(question_text = q_txt)
+            #save teh question
+            new_question.save()
+            #return http response
+            return HttpResponseRedirect (reverse ('polls:detail', args=(new_question.pk,)))
+    else:
+        form = QuestionForm()
+    
+    return render(request, 'polls/question_edit.html', {'form': form})
+    
+def edit_question (request, question_id):
+    existing_q = get_object_or_404(Question, pk=question_id)
+    if request.method == 'POST':
+        form = QuestionForm(request.POST, instance = existing_q )
+        if form.is_valid():
+            #get the question text from the form
+            q_txt = form.cleaned_data['question_text']
+            #create a new questipon
+            new_question = Question(question_text = q_txt)
+            #save teh question
+            new_question.save()
+            #return http response
+            return HttpResponseRedirect (reverse ('polls:detail', args=(new_question.pk,)))
+    else:
+        form = QuestionForm(instance =existing_q )
+    
+    return render(request, 'polls/question_edit.html', {'form': form})

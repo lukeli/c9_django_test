@@ -1,4 +1,13 @@
-<h1>{{ question.question_text }}</h1>
+{% extends 'polls/base_polls.html' %}
+
+ {% block content %}
+
+<h2>{{ question.question_text }}</h2>
+
+<a  href="{% url 'polls:edit_question'  question.id %}"><span class="glyphicon glyphicon-pencil"></span>Edit Question</a>  
+
+<p> </p>
+<p> </p>
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <form action="{% url 'polls:vote' question.id %}" method="post">
@@ -9,3 +18,5 @@
 {% endfor %}
 <input type="submit" value="Vote" />
 </form>
+
+{% endblock content %}

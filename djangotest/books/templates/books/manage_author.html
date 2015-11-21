@@ -1,0 +1,19 @@
+
+<h1> Add New Authors: </h1>
+
+
+<form method="POST" class="post-form">{% csrf_token %}
+    {{ formset.management_form }}
+    <table>
+        {{ formset }}
+    </table>
+    
+     <button type="submit" class="save btn btn-default">Save</button>
+</form>
+
+
+
+
+
+
+
